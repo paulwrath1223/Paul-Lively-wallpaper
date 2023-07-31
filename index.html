@@ -23,8 +23,9 @@
         display: flex;
         width: 100vw;
         height: 100vh;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: stretch;
+        flex-direction: column;
       }
 
       .blur {
@@ -80,10 +81,8 @@
       }
       canvas {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        top: 1%;
+        height: 30%;
       }
       .center {
         text-align: center;
@@ -105,6 +104,30 @@
       div {
         padding: 10px;
       }
+      .top{
+        top: 1%;
+        height: 30%;
+      }
+      .bl {
+        position: absolute;
+        top: 30%;
+        left: 0;
+        right: 50%;
+        bottom: 0;
+
+      }
+      .br {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        right: 0;
+        bottom: 0;
+
+      }
+      #music-info {
+        position: absolute;
+
+      }
 
       h1 {
         font-family: Montserrat;
@@ -124,17 +147,25 @@
     <script src="js/script.js" defer></script>
   </head>
   <body>
-    <canvas id="canvas" width="300" height="300"></canvas>
-    <div class="center">
-      <img id="albumart" alt="" />
-      <span
-        ><h1>Waiting for media... <span></span></h1>
-        <h2></h2
-      ></span>
+    <div class="top">
+      <canvas id="canvas" width="300" height="300"></canvas>
+      <div class="center">
+        <img id="albumart" alt="" />
+        <span
+          ><h1>Waiting for media... <span></span></h1>
+          <h2></h2
+        ></span>
+      </div>
+      <div id="parallax">
+        <img id="backgroundImageFade" />
+        <img id="backgroundImage" />
+      </div>
     </div>
-    <div id="parallax">
-      <img id="backgroundImageFade" />
-      <img id="backgroundImage" />
+    <div class="bl">
+      <iframe src="https://tasks.google.com/embed/list/~default" title="Google Tasks" id="tasks-frame"></iframe>
+    </div>
+    <div class="br">
+      <iframe src="https://calendar.google.com/calendar/u/0/r" title="Google Calender" id="calender-frame"></iframe>
     </div>
   </body>
 </html>

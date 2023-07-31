@@ -29,15 +29,5 @@
     "text": "Dot size",
     "type": "slider",
     "value": 0.5
-  },
-  "sortingMode": {
-    "type": "dropdown",
-    "value": 2,
-    "text": "Spectrum mode",
-    "items": [
-      "Concentrated",
-      "Center-split",
-      "Keep original"
-    ]
   }
 }

@@ -27,8 +27,7 @@ const TAU = Math.PI * 2;
 let canvas = document.getElementById("canvas");
 let max_height, startPos, vizWidth, midY;
 
-let numDots = 128;
-let dotSize = 10;
+
 let dotScale = 0.5;
 let backgroundColor = "rgb(0,0,0)";
 let foregroundColor = "rgb(255,255,255)";
@@ -36,7 +35,6 @@ let rainbow = false;
 
 let ctx = canvas.getContext("2d");
 let verticalScale = 8;
-let sortSoundArray = null;
 
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -49,9 +47,6 @@ function hexToRgb(hex) {
     : null;
 }
 
-function calcDotSize() {
-  dotSize = dotScale * (canvas.width / numDots);
-}
 
 function setCanvasSize() {
   canvas.width = window.innerWidth;
@@ -60,56 +55,10 @@ function setCanvasSize() {
   startPos = 0;
   vizWidth = window.innerWidth;
   midY = canvas.height - canvas.height * 0.5;
-  calcDotSize();
 }
 
 window.onload = setCanvasSize;
 window.onresize = setCanvasSize;
-
-function concentratedSort(audioArray) {
-  audioArray.sort().splice(0, audioArray.length * 0.75);
-  audioArray.push(...[...audioArray].reverse());
-  return audioArray;
-}
-
-function centeredSort(audioArray) {
-  const newHalf = audioArray.splice(0, audioArray.length * 0.5);
-  audioArray.reverse().push(...newHalf);
-  return audioArray;
-}
-
-function renderAnimation(audioArray) {
-  ctx.fillStyle = foregroundColor;
-
-  for (let x = 0; x < audioArray.length; x++) {
-    const soundVal = audioArray[x];
-
-    if (rainbow) ctx.fillStyle = rainbowColors[x % rainbowColors.length] || foregroundColor;
-
-    for (let y = 0; y < soundVal * verticalScale; y++) {
-      const vertIndex = soundVal - y / verticalScale;
-      const xPos = (x / audioArray.length) * canvas.width;
-      const yPos = y * dotSize * 2;
-      const arcRadius = Math.min(vertIndex * dotSize, dotSize);
-
-      ctx.beginPath();
-      ctx.arc(xPos, midY - yPos, arcRadius, 0, TAU);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(xPos, midY + yPos, arcRadius, 0, TAU);
-      ctx.fill();
-    }
-  }
-}
-
-function livelyAudioListener(audioArray) {
-  if (sortSoundArray) audioArray = sortSoundArray?.(audioArray);
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  renderAnimation(audioArray);
-}
 
 // #endregion visualizer
 
@@ -226,23 +175,7 @@ function livelyPropertyListener(name, val) {
       },
       break;
       */
-    case "sortingMode":
-      switch (val) {
-        case 0:
-          sortSoundArray = concentratedSort;
-          numDots = 128;
-          break;
-        case 1:
-          sortSoundArray = centeredSort;
-          numDots = 256;
-          break;
-        default:
-          sortSoundArray = null;
-          numDots = 256;
-          break;
-      }
-      calcDotSize();
-      break;
+
     case "verticalScale":
       verticalScale = val;
       break;

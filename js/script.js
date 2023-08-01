@@ -1,4 +1,21 @@
 // #region parallax
+import dayGridPlugin from '@fullcalendar/daygrid'
+import iCalendarPlugin from '@fullcalendar/icalendar'
+import {Calendar} from "fullcalendar";
+
+
+setTimeout(refresh_calender, 60000);
+const calendarEl = document.getElementById('calendar');
+const calendar = new Calendar(calendarEl, {
+  plugins: [dayGridPlugin, iCalendarPlugin],
+  events: {
+    url: 'https://mywebsite/icalendar-feed.ics',
+    format: 'ics'
+  }
+});
+document.addEventListener('DOMContentLoaded', function() {
+  calendar.render();
+})
 
 let _parallax = true, parallaxVal = 5;
 const backgroundImageFade = document.getElementById("backgroundImageFade");
@@ -47,6 +64,9 @@ function hexToRgb(hex) {
     : null;
 }
 
+function refresh_calender(){
+  calendar.refetchEvents();
+}
 
 function setCanvasSize() {
   canvas.width = window.innerWidth;
